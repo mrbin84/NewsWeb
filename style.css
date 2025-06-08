@@ -32,6 +32,7 @@ body {
     z-index: 500; /* 다른 콘텐츠 위에 표시되도록 z-index 설정 */
     width: 100%; /* 헤더 너비를 부모의 100%로 설정 */
     box-sizing: border-box; /* 패딩과 보더가 width에 포함되도록 설정 */
+    position: relative; /* 로고의 absolute 기준 설정 */
 }
 
 /* --- 헤더 내부 컨테이너 스타일 --- */
@@ -44,19 +45,21 @@ body {
     align-items: center; /* 내부 요소들을 세로 중앙 정렬 */
     /* ✅ 변경: 로고와 햄버거 메뉴 버튼을 양 끝으로 정렬 */
     /*justify-content: space-between; */
-    justify-content: center; /* 일단 컨테이너 내 모든 것을 중앙으로 정렬 */
-    gap: 20px; /* 요소들 간의 간격 (필요 시 조절) */
+    justify-content: space-between; /* 기본으로 유지하되, 아래 logo-wrapper의 auto margin과 flex-grow로 제어 */
+    /* gap: 20px;  // 이전에 추가했다면 제거하거나 필요에 따라 조절 */
+    position: relative; /* menu-toggle의 absolute 기준 */
 }
 
 /* ✅ 추가: 로고를 감싸는 wrapper 스타일 */
 .logo-wrapper {
-    /*flex-grow: 1; /* 남은 공간을 모두 차지하도록 하여 로고를 가운데로 밀 수 있는 공간 확보 */
-    /*text-align: center; /* 로고 이미지를 가운데 정렬 */
-    /* ✅ 변경: flex-grow는 로고가 커질 때 너무 많은 공간을 차지하지 않도록 제거하거나 0으로 설정 */
-    flex-grow: 0; /* 이제 로고 래퍼가 남은 공간을 차지하지 않고 로고 크기만큼만 공간 사용 */
-    text-align: center; /* 로고 이미지를 가운데 정렬 */
-    /* 햄버거 버튼과 로고 래퍼 사이의 공간을 확보하기 위해 마진을 추가할 수 있습니다. */
-    margin: 0 auto; /* 로고 래퍼 자체를 컨테이너 내에서 중앙 정렬 (flex-grow: 0일 때 작동) */
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1;
+
+    flex-grow: 0; /* 불필요하지만 명시적으로 유지 */
+    text-align: center;
+    margin: 0 auto;
 }
 
 /* --- 로고 이미지 스타일 --- */
@@ -79,8 +82,6 @@ body {
     color: #333;
     display: block; /* 기본적으로 보임 (모바일 우선) */
     transition: color 0.2s ease;
-    margin-right: auto; /* ✅ 추가: 햄버거 버튼을 왼쪽으로 밀고 오른쪽에 여유 공간 확보 */
-    order: -1; /* flex item 순서를 가장 앞으로 (로고보다 왼쪽에 배치) */
 }
 
 .menu-toggle:hover {
@@ -96,8 +97,8 @@ body {
 .sidebar {
     position: fixed;
     top: 0;
-    left: -280px; /* 초기에는 화면 왼쪽 밖으로 숨김 */
-    width: 250px; /* 메뉴 너비 */
+    left: -300px; /* 초기에는 화면 왼쪽 밖으로 숨김 */
+    width: 150px; /* 메뉴 너비 */
     height: 100%;
     background-color: #2c3e50; /* 어두운 네이비색 배경 */
     color: #ecf0f1; /* 밝은 텍스트 색상 */
@@ -210,9 +211,6 @@ footer {
 
 /* 미디어 쿼리: 데스크톱 (768px 이상) */
 @media (min-width: 768px) {
-    .menu-toggle {
-        display: none; /* 데스크톱에서는 햄버거 버튼 숨김 */
-    }
 
     .top-nav-desktop {
         display: block; /* 데스크톱에서는 상단 메뉴 표시 */
@@ -242,19 +240,7 @@ footer {
         color: #003366; /* 호버 시 헤더 색상으로 변경 */
     }
 
-    .sidebar,
-    .sidebar-overlay {
-        display: none !important; /* 데스크톱에서는 슬라이드 메뉴 완전히 숨김 */
-    }
+ 
 
-    /* .site-header .container 의 justify-content 조정 */
-    .site-header .container {
-        justify-content: space-between; /* 로고와 데스크톱 메뉴 양 끝 정렬 */
-    }
 
-    /* 데스크톱에서는 logo-wrapper가 모든 공간을 차지할 필요 없으므로 flex-grow 초기화 */
-    .logo-wrapper {
-        flex-grow: 1; /* 데스크톱에서는 다시 공간을 차지하여 중앙 정렬 보조 */
-        text-align: center; /* 로고 중앙 정렬 유지 */
-    }
 }
