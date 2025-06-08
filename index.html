@@ -1,24 +1,48 @@
-<!-- index.html -->
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8" />
-  <title>뉴스 사이트</title>
-  <link rel="stylesheet" href="style.css" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <title>경수님의 뉴스 사이트</title>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
-  <header>
-    <h1>오늘의 뉴스</h1>
-  </header>
-  <main>
-    <article class="news-item">
-      <h2><a href="article.html">AI가 바꿀 미래의 직업</a></h2>
-      <p class="summary">인공지능(AI)의 발전으로 인해 미래의 직업 환경이 급격히 변화하고 있습니다.</p>
-      <p class="date">2025-06-07</p>
-    </article>
-  </main>
-  <footer>
-    <p>&copy; 2025 뉴스사이트</p>
-  </footer>
-</body>
+    <header class="site-header">
+        <div class="container">
+            <button class="menu-toggle" aria-label="메뉴 열기">
+                <i class="fas fa-bars"></i> </button>
+
+            <div class="logo-wrapper"> 
+                <!--<img src="logo.png" alt="뉴스사이트 로고" class="logo" /> -->
+                <img src="logo.png" alt="뉴스사이트 로고" class="logo" />
+            </div>
+
+        </div>
+    </header>
+
+    <div class="sidebar-overlay"></div>
+    <aside class="sidebar">
+        <button class="close-btn" aria-label="메뉴 닫기">
+            <i class="fas fa-times"></i> </button>
+        <nav class="sidebar-nav">
+            <ul>
+                <li><a href="index.html">홈</a></li> 
+                <li><a href="#">뉴스</a></li>
+            </ul>
+        </nav>
+    </aside>
+
+    <main>
+        <article class="news-item">
+            <h2><a href="article.html">AI가 바꿀 미래의 직업</a></h2>
+            <p class="summary">인공지능(AI)의 발전으로 인해 미래의 직업 환경이 급격히 변화하고 있습니다.</p>
+            <p class="date">2025-06-07</p>
+        </article>
+        </main>
+
+    <footer>
+        <p>&copy; 2025 뉴스 사이트</p> 
+    </footer>
+
+    <script src="script.js"></script> </body>
 </html>
