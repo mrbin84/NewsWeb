@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>기사 작성 - 뉴스 사이트</title>
+
+  <!-- 스타일 -->
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+  <style>
+    .editor-container {
+      max-width: 800px;
+      margin: 2rem auto;
+      padding: 1rem;
+    }
+
+    .editor-container input[type="text"] {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 1rem;
+      font-size: 1.2rem;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+
+    .editor-container button {
+      padding: 10px 20px;
+      margin-top: 1rem;
+      font-size: 1rem;
+      border: none;
+      border-radius: 6px;
+      background-color: #007bff;
+      color: white;
+      cursor: pointer;
+    }
+
+    .editor-container button:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+  <!-- 헤더 -->
+  <header class="site-header">
+    <div class="container">
+      <button class="menu-toggle" aria-label="메뉴 열기">
+        <i class="fas fa-bars"></i>
+      </button>
+      <div class="logo-wrapper">
+        <img src="logo.png" alt="뉴스사이트 로고" class="logo" />
+      </div>
+    </div>
+  </header>
+
+  <!-- 본문 -->
+  <main>
+    <div class="editor-container">
+      <h2>📝 뉴스 기사 작성</h2>
+      <input type="text" id="title" placeholder="기사 제목을 입력하세요" />
+      <div id="editor"></div>
+      <button onclick="saveArticle()">📁 저장 (JSON 파일)</button>
+    </div>
+  </main>
+
+  <!-- 푸터 -->
+  <footer>
+    <p>&copy; 2025 뉴스 사이트</p>
+  </footer>
+
+  <!-- 스크립트 로드 -->
+  <script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
+  <script>
+    // 에디터 초기화
+    const editor = new toastui.Editor({
+      el: document.querySelector('#editor'),
+      height: '500px',
+      initialEditType: 'wysiwyg', // 'markdown' 가능
+      previewStyle: 'vertical',
+      language: 'ko',
+      hooks: {
+        // 기본 이미지 업로드를 막고 경고창
+        addImageBlobHook: (blob, callback) => {
+          alert("이미지 업로드는 URL을 이용해 주세요.\n(또는 Base64 방식으로 확장 가능)");
+          return false;
+        }
+      }
+    });
+
+    // 저장 함수
+    function saveArticle() {
+      const title = document.getElementById('title').value.trim();
+      const content = editor.getHTML();
+      const date = new Date().toISOString();
+
+      if (!title || !content) {
+        alert("제목과 내용을 모두 입력해 주세요.");
+        return;
+      }
+
+      const article = {
+        id: `article-${Date.now()}`,
+        title,
+        content,
+        date
+      };
+
+      const json = JSON.stringify(article, null, 2);
+      const blob = new Blob([json], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `${article.id}.json`;
+      a.click();
+    }
+  </script>
+</body>
+</html>
