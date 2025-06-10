@@ -100,22 +100,52 @@
     const dateEl = document.getElementById("article-date");
     const contentEl = document.getElementById("article-content");
 
-    articleFiles.forEach(file => {
-      fetch(file)
-        .then(res => res.json())
-        .then(data => {
-          const li = document.createElement("li");
-          const a = document.createElement("a");
-          a.textContent = `${data.title} (${new Date(data.date).toLocaleDateString()})`;
-          a.href = "#";
-          a.onclick = (e) => {
-            e.preventDefault();
-            loadArticle(file);
-          };
-          li.appendChild(a);
-          listEl.appendChild(li);
-        });
-    });
+    // 최상단에 test.json 기사 표시
+    fetch('articles/test.json')
+      .then(res => res.json())
+      .then(data => {
+        const mainArticle = document.createElement('div');
+        mainArticle.classList.add('main-article'); // 스타일링을 위한 클래스 추가
+
+        const articleLink = document.createElement('a');
+        articleLink.href = '#test'; // test.json에 해당하는 id (추후 수정 가능)
+        articleLink.onclick = (e) => {
+          e.preventDefault();
+          loadArticle('articles/test.json');
+        };
+
+        const image = document.createElement('img');
+        image.src = 'images/jeju.png'; // 이미지 경로
+        image.alt = data.title;
+        image.style.maxHeight = '200px'; // 이미지 최대 높이 제한
+
+        const title = document.createElement('h3'); // h2에서 h3으로 변경
+        title.textContent = data.title;
+
+        articleLink.append(image, title);
+        mainArticle.appendChild(articleLink);
+        listEl.prepend(mainArticle); // ul의 최상단에 추가
+      });
+
+      // 나머지 기사 목록 생성
+      articleFiles.forEach(file => {
+        if (file !== 'articles/test.json') { // test.json 제외
+          fetch(file)
+            .then(res => res.json())
+            .then(data => {
+              const li = document.createElement("li");
+              const a = document.createElement("a");
+              a.textContent = `${data.title} (${new Date(data.date).toLocaleDateString()})`;
+              a.href = "#";
+              a.onclick = (e) => {
+                e.preventDefault();
+                loadArticle(file);
+              };
+              li.appendChild(a);
+              listEl.appendChild(li);
+            });
+        }
+      });
 
     function loadArticle(file) {
       fetch(file)
@@ -123,7 +153,7 @@
         .then(data => {
           titleEl.textContent = data.title;
           dateEl.textContent = `작성일: ${new Date(data.date).toLocaleDateString()}`;
-          contentEl.innerHTML = data.content;
+          contentEl.innerHTML = data.content; // test.json의 content 표시
           detailEl.style.display = "block";
           detailEl.scrollIntoView({ behavior: "smooth" });
         });

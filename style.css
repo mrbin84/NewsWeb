@@ -175,6 +175,41 @@ body {
     opacity: 1;
 }
 
+/* 홈 화면 상단 대표 기사 스타일 */
+.main-article {
+  margin-bottom: 20px; /* 다른 기사 목록과의 간격 */
+  /* li 요소로 변경될 경우 list-style: none; 등이 필요할 수 있음 */
+}
+
+.main-article a {
+  display: block; /* 링크 영역을 전체로 확장 */
+  position: relative; /* 내부 h3 제목의 absolute 포지셔닝 기준 */
+  text-decoration: none;
+  color: inherit;
+}
+
+.main-article img {
+  display: block; /* 이미지 하단 여백 제거 */
+  width: 100%;
+  height: auto; /* 이미지 비율 유지 */
+  max-height: 200px; /* 이미지 최대 높이 (index.html의 인라인 스타일을 CSS로 이동) */
+  object-fit: cover; /* 이미지가 영역을 채우도록 설정 (비율 유지하며 잘릴 수 있음) */
+}
+
+.main-article h3 {
+  position: absolute; /* 제목을 이미지 위에 표시 */
+  top: 50%; /* 상단에서 50% 위치 */
+  left: 50%; /* 좌측에서 50% 위치 */
+  transform: translate(-50%, -50%); /* 자신의 크기만큼 X, Y축으로 -50% 이동하여 정중앙 정렬 */
+  width: auto; /* 너비를 내용에 맞게 자동 조절, 필요시 max-width 설정 가능 */
+  /* background-color: rgba(0, 0, 0, 0.5); */ /* 배경색 제거 또는 주석 처리 */
+  color: white; /* 글자색 (흰색) */
+  padding: 10px;
+  text-align: center;
+  margin: 0; /* 기본 마진 제거 */
+  box-sizing: border-box; /* 패딩과 보더를 너비에 포함 */
+  font-size: 1.2em; /* 제목 폰트 크기 (예시) */
+}
 
 /* 메인 콘텐츠 스타일 (기존 유지) */
 main {
@@ -240,7 +275,7 @@ footer {
         color: #003366; /* 호버 시 헤더 색상으로 변경 */
     }
 
- 
+
 
 
 }
