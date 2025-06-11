@@ -91,7 +91,8 @@
     const articleFiles = [
       "articles/article-1.json",
       "articles/article-2.json",
-      "articles/article-3.json"
+      "articles/article-3.json",
+      "articles/20250611_article1_1.json"
     ];
 
     const listEl = document.getElementById("article-list");
@@ -101,7 +102,7 @@
     const contentEl = document.getElementById("article-content");
 
     // 최상단에 test.json 기사 표시
-    fetch('articles/test.json')
+    fetch('articles/20250611_article1_1.json') // test.json 대신 20250611_article1_1.json 로 변경
       .then(res => res.json())
       .then(data => {
         const mainArticle = document.createElement('div');
@@ -109,20 +110,20 @@
 
         const articleLink = document.createElement('a');
         articleLink.href = '#test'; // test.json에 해당하는 id (추후 수정 가능)
-        articleLink.onclick = (e) => {
+        articleLink.onclick = (e) => { // 클릭 시 해당 기사 로드
           e.preventDefault();
-          loadArticle('articles/test.json');
+          loadArticle('articles/20250611_article1_1.json'); // 로드할 기사 파일 변경
         };
 
-        const image = document.createElement('img');
-        image.src = 'images/jeju.png'; // 이미지 경로
+        const image = document.createElement('img'); // 이미지 요소 생성
+        image.src = 'images/20250611_article1_1.png'; // 이미지 경로 변경
         image.alt = data.title;
         image.style.maxHeight = '200px'; // 이미지 최대 높이 제한
 
         const title = document.createElement('h3'); // h2에서 h3으로 변경
         title.textContent = data.title;
 
-        articleLink.append(image, title);
+        articleLink.append(image, title); // 링크 안에 이미지와 제목 추가
         mainArticle.appendChild(articleLink);
         listEl.prepend(mainArticle); // ul의 최상단에 추가
       });
@@ -153,7 +154,7 @@
         .then(data => {
           titleEl.textContent = data.title;
           dateEl.textContent = `작성일: ${new Date(data.date).toLocaleDateString()}`;
-          contentEl.innerHTML = data.content; // test.json의 content 표시
+          contentEl.innerHTML = data.content; // 기사의 content 표시
           detailEl.style.display = "block";
           detailEl.scrollIntoView({ behavior: "smooth" });
         });
